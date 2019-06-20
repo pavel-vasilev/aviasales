@@ -2,6 +2,7 @@ package com.pvasilev.aviasales.presentation.map
 
 import com.airbnb.mvrx.MvRxState
 import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.SphericalUtil
 
 data class MapState(
     val locationFrom: LatLng,
@@ -18,6 +19,6 @@ data class MapState(
         args.cityFrom,
         args.cityTo,
         args.locationFrom,
-        0.0F
+        (SphericalUtil.computeHeading(args.locationFrom, args.locationTo) - 90).toFloat()
     )
 }
