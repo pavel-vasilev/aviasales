@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import com.airbnb.mvrx.fragmentViewModel
+import com.airbnb.mvrx.withState
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
 import com.pvasilev.aviasales.R
@@ -15,8 +17,6 @@ import com.pvasilev.aviasales.presentation.base.BaseMapMvRxFragment
 
 class MapFragment : BaseMapMvRxFragment() {
     private val viewModel: MapViewModel by fragmentViewModel()
-
-    private var polyline: Polyline? = null
 
     private var marker: Marker? = null
 
@@ -28,6 +28,21 @@ class MapFragment : BaseMapMvRxFragment() {
     }
 
     override fun invalidate() {
+        val map = map ?: return
+        withState(viewModel) { state ->
+            map.apply {
+                marker?.apply {
+                    position = state.planeLocation
+                    rotation = state.planeRotation
+                } ?: run {
+                    addPolyline(getPolyline(state.pointsOnPath))
+                    addMarker(getCityMarker(state.cityFrom, state.locationFrom))
+                    addMarker(getCityMarker(state.cityTo, state.locationTo))
+                    moveCamera(CameraUpdateFactory.newLatLng(state.locationFrom))
+                    marker = addMarker(getPlaneMarker(state.planeLocation, state.planeRotation))
+                }
+            }
+        }
     }
 
     private fun getPolyline(points: List<LatLng>) = PolylineOptions().apply {
