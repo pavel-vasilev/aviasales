@@ -1,4 +1,4 @@
-package com.pvasilev.aviasales.presentation
+package com.pvasilev.aviasales.presentation.base
 
 import android.os.Bundle
 import androidx.lifecycle.LifecycleOwner

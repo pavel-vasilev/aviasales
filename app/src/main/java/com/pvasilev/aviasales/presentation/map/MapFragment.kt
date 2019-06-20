@@ -3,14 +3,30 @@ package com.pvasilev.aviasales.presentation.map
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
+import com.airbnb.mvrx.fragmentViewModel
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
 import com.pvasilev.aviasales.R
-import com.pvasilev.aviasales.presentation.BaseMapMvRxFragment
+import com.pvasilev.aviasales.presentation.base.BaseMapMvRxFragment
 
 class MapFragment : BaseMapMvRxFragment() {
+    private val viewModel: MapViewModel by fragmentViewModel()
+
+    private var polyline: Polyline? = null
+
+    private var marker: Marker? = null
+
+    private var map: GoogleMap? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        getMapAsync { map = it }
+    }
+
     override fun invalidate() {
     }
 
