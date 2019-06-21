@@ -5,8 +5,9 @@ import com.pvasilev.aviasales.data.repository.CityRepository
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class GetCitiesUseCase(private val repository: CityRepository) {
+class GetCitiesUseCase @Inject constructor(private val repository: CityRepository) {
     operator fun invoke(params: Params): Single<List<City>> {
         return repository.getCities(params.term)
             .subscribeOn(Schedulers.io())

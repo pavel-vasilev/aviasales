@@ -2,8 +2,9 @@ package com.pvasilev.aviasales.domain
 
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.SphericalUtil
+import javax.inject.Inject
 
-class GetPointsOnPathUseCase {
+class GetPointsOnPathUseCase @Inject constructor() {
     operator fun invoke(params: Params): List<LatLng> {
         val (from, to, size) = params
         return (0..size)

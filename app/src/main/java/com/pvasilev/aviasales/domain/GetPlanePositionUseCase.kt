@@ -4,8 +4,9 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.SphericalUtil
 import com.pvasilev.aviasales.data.repository.TicketRepository
 import io.reactivex.Observable
+import javax.inject.Inject
 
-class GetPlanePositionUseCase(private val repository: TicketRepository) {
+class GetPlanePositionUseCase @Inject constructor(private val repository: TicketRepository) {
     operator fun invoke(params: Params): Observable<LatLng> {
         val (from, to) = params
         return repository.getTicketsProgress()

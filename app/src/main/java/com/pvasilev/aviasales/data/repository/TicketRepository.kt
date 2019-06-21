@@ -2,8 +2,9 @@ package com.pvasilev.aviasales.data.repository
 
 import android.animation.ValueAnimator
 import io.reactivex.Observable
+import javax.inject.Inject
 
-class TicketRepository {
+class TicketRepository @Inject constructor() {
     fun getTicketsProgress(): Observable<Float> {
         return Observable.create { emitter ->
             val animator = ValueAnimator.ofFloat(0.0F, 1.0F)

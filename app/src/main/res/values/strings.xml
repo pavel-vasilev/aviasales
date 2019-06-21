@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Aviasales</string>
+    <string name="find_tickets">Find tickets</string>
+    <string name="choose_departure">Choose departure</string>
+    <string name="choose_destination">Choose destination</string>
     <string name="google_maps_key" translatable="false" templateMergeStrategy="preserve">AIzaSyBIyQMgO9v9TfLmql4Fo_7LYp1BhmycZRQ</string>
 </resources>
