@@ -47,6 +47,12 @@ class LocationViewModel @AssistedInject constructor(
         })
     }
 
+    fun onSwapClicked() {
+        setState {
+            copy(locationFrom = locationTo, locationTo = locationFrom, cityFrom = cityTo, cityTo = cityFrom)
+        }
+    }
+
     fun onSearchClicked() {
         withState { state ->
             if (state.locationFrom != state.locationTo) {
@@ -55,8 +61,8 @@ class LocationViewModel @AssistedInject constructor(
                         MapArgs(
                             state.locationFrom!!,
                             state.locationTo!!,
-                            state.cityFrom!!,
-                            state.cityTo!!
+                            state.cityFrom!!.take(3).toUpperCase(),
+                            state.cityTo!!.take(3).toUpperCase()
                         )
                     )
                 )

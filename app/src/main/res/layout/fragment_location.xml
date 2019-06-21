@@ -1,28 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:gravity="center"
-              android:layout_marginStart="48dp"
-              android:layout_marginEnd="48dp">
-    <TextView
-            android:id="@+id/tv_from"
-            android:text="@string/choose_departure"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:background="@color/blue">
+    <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    <TextView
-            android:id="@+id/tv_to"
-            android:text="@string/choose_destination"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="150dp"
+            android:background="@color/white"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            app:cardCornerRadius="8dp">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="16dp">
+            <TextView
+                    android:id="@+id/tv_from"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:gravity="center_vertical"
+                    android:alpha="0.87"
+                    android:textColor="@color/black"
+                    tools:text="Moscow"/>
+            <View
+                    android:layout_width="match_parent"
+                    android:background="#E0E0E0"
+                    android:layout_height="1dp"
+                    android:layout_marginEnd="64dp"/>
+            <TextView
+                    android:id="@+id/tv_to"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:textSize="16sp"
+                    android:alpha="0.87"
+                    android:textColor="@color/black"
+                    tools:text="Barcelona"/>
+        </LinearLayout>
+        <ImageButton
+                android:id="@+id/btn_swap"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="24dp"
+                android:src="@drawable/ic_swap"
+                android:scaleType="centerCrop"
+                android:padding="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_width="48dp"
+                android:layout_height="48dp"/>
+    </androidx.cardview.widget.CardView>
     <Button
             android:id="@+id/btn_search"
             android:text="@string/find_tickets"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:background="@drawable/bg_button"
+            android:padding="24dp"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"/>
 </LinearLayout>

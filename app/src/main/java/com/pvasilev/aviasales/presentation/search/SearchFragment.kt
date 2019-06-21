@@ -29,7 +29,7 @@ class SearchFragment : BaseMvRxFragment(), OnBackPressedListener {
             searchViewModel.onCitySelected(it)
         }
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.addItemDecoration(DividerItemDecoration())
+        recyclerView.addItemDecoration(DividerItemDecoration(resources.displayMetrics.density * 16))
     }
 
     override fun invalidate() = withState(searchViewModel) { state ->

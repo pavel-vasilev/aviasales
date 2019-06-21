@@ -27,6 +27,9 @@ class LocationFragment : BaseMvRxFragment(), OnBackPressedListener {
         tv_to.setOnClickListener {
             viewModel.onLocationToClicked()
         }
+        btn_swap.setOnClickListener {
+            viewModel.onSwapClicked()
+        }
         btn_search.setOnClickListener {
             viewModel.onSearchClicked()
         }
