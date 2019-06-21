@@ -9,11 +9,15 @@
     <TextView
             android:id="@+id/tv_from"
             android:text="@string/choose_departure"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     <TextView
             android:id="@+id/tv_to"
             android:text="@string/choose_destination"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     <Button

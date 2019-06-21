@@ -13,9 +13,13 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
 import com.pvasilev.aviasales.R
+import com.pvasilev.aviasales.presentation.OnBackPressedListener
 import com.pvasilev.aviasales.presentation.base.BaseMapMvRxFragment
+import com.pvasilev.aviasales.presentation.inject
 
-class MapFragment : BaseMapMvRxFragment() {
+class MapFragment : BaseMapMvRxFragment(), OnBackPressedListener {
+    val viewModelFactory: MapViewModel.Factory by inject("AppScope")
+
     private val viewModel: MapViewModel by fragmentViewModel()
 
     private var marker: Marker? = null
@@ -43,6 +47,11 @@ class MapFragment : BaseMapMvRxFragment() {
                 }
             }
         }
+    }
+
+    override fun onBackPressed(): Boolean {
+        viewModel.onBackPressed()
+        return true
     }
 
     private fun getPolyline(points: List<LatLng>) = PolylineOptions().apply {

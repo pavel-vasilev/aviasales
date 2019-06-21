@@ -1,45 +1,50 @@
 package com.pvasilev.aviasales.presentation.location
 
+import com.airbnb.mvrx.FragmentViewModelContext
+import com.airbnb.mvrx.MvRxViewModelFactory
+import com.airbnb.mvrx.ViewModelContext
 import com.google.android.gms.maps.model.LatLng
 import com.pvasilev.aviasales.data.models.City
 import com.pvasilev.aviasales.presentation.base.BaseMvRxViewModel
+import com.pvasilev.aviasales.presentation.base.ViewModelFactory
 import com.pvasilev.aviasales.presentation.map.MapArgs
 import com.pvasilev.aviasales.presentation.map.MapScreen
+import com.pvasilev.aviasales.presentation.search.OnCitySelectedListener
 import com.pvasilev.aviasales.presentation.search.SearchScreen
+import com.squareup.inject.assisted.Assisted
+import com.squareup.inject.assisted.AssistedInject
 import ru.terrakok.cicerone.Router
+import toothpick.Toothpick
+import toothpick.config.Module
 
-class LocationViewModel(
-    initialState: LocationState,
+class LocationViewModel @AssistedInject constructor(
+    @Assisted initialState: LocationState,
     private val router: Router
 ) : BaseMvRxViewModel<LocationState>(initialState) {
-    private var onCitySelectedListener: ((City) -> Unit)? = null
-
-    fun onCitySelected(city: City) {
-        onCitySelectedListener?.invoke(city)
-    }
-
     fun onLocationFromClicked() {
-        onCitySelectedListener = {
-            setState {
-                copy(
-                    locationFrom = LatLng(it.location.lat.toDouble(), it.location.lon.toDouble()),
-                    cityFrom = it.latinCity
-                )
+        selectCity(object : OnCitySelectedListener {
+            override fun onCitySelected(city: City) {
+                setState {
+                    copy(
+                        locationFrom = LatLng(city.location.lat.toDouble(), city.location.lon.toDouble()),
+                        cityFrom = city.latinCity
+                    )
+                }
             }
-        }
-        router.navigateTo(SearchScreen())
+        })
     }
 
     fun onLocationToClicked() {
-        onCitySelectedListener = {
-            setState {
-                copy(
-                    locationTo = LatLng(it.location.lat.toDouble(), it.location.lon.toDouble()),
-                    cityTo = it.latinCity
-                )
+        selectCity(object : OnCitySelectedListener {
+            override fun onCitySelected(city: City) {
+                setState {
+                    copy(
+                        locationTo = LatLng(city.location.lat.toDouble(), city.location.lon.toDouble()),
+                        cityTo = city.latinCity
+                    )
+                }
             }
-        }
-        router.navigateTo(SearchScreen())
+        })
     }
 
     fun onSearchClicked() {
@@ -56,6 +61,29 @@ class LocationViewModel(
                     )
                 )
             }
+        }
+    }
+
+    fun onBackPressed() {
+        router.exit()
+    }
+
+    private fun selectCity(onCitySelectedListener: OnCitySelectedListener) {
+        val scope = Toothpick.openScopes("AppScope", "SearchScope")
+        val module = Module().apply {
+            bind(OnCitySelectedListener::class.java).toInstance(onCitySelectedListener)
+        }
+        scope.installModules(module)
+        router.navigateTo(SearchScreen())
+    }
+
+    @AssistedInject.Factory
+    interface Factory : ViewModelFactory<LocationViewModel, LocationState>
+
+    companion object : MvRxViewModelFactory<LocationViewModel, LocationState> {
+        override fun create(viewModelContext: ViewModelContext, state: LocationState): LocationViewModel? {
+            val factory = (viewModelContext as FragmentViewModelContext).fragment<LocationFragment>().viewModelFactory
+            return factory.create(state)
         }
     }
 }

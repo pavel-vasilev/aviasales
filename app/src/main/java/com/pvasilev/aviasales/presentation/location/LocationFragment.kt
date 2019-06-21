@@ -8,9 +8,13 @@ import com.airbnb.mvrx.BaseMvRxFragment
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
 import com.pvasilev.aviasales.R
+import com.pvasilev.aviasales.presentation.OnBackPressedListener
+import com.pvasilev.aviasales.presentation.inject
 import kotlinx.android.synthetic.main.fragment_location.*
 
-class LocationFragment : BaseMvRxFragment() {
+class LocationFragment : BaseMvRxFragment(), OnBackPressedListener {
+    val viewModelFactory: LocationViewModel.Factory by inject("AppScope")
+
     private val viewModel: LocationViewModel by fragmentViewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
@@ -32,5 +36,10 @@ class LocationFragment : BaseMvRxFragment() {
         tv_from.text = state.cityFrom ?: resources.getString(R.string.choose_departure)
         tv_to.text = state.cityTo ?: resources.getString(R.string.choose_destination)
         btn_search.isEnabled = state.locationFrom != null && state.locationTo != null
+    }
+
+    override fun onBackPressed(): Boolean {
+        viewModel.onBackPressed()
+        return true
     }
 }

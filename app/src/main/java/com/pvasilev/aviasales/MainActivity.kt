@@ -1,30 +1,43 @@
 package com.pvasilev.aviasales
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.airbnb.mvrx.MvRx
-import com.google.android.gms.maps.model.LatLng
-import com.pvasilev.aviasales.presentation.map.MapArgs
-import com.pvasilev.aviasales.presentation.map.MapFragment
+import com.airbnb.mvrx.BaseMvRxActivity
+import com.pvasilev.aviasales.presentation.OnBackPressedListener
+import com.pvasilev.aviasales.presentation.inject
+import com.pvasilev.aviasales.presentation.location.LocationScreen
+import com.pvasilev.aviasales.presentation.location.LocationViewModel
+import ru.terrakok.cicerone.Navigator
+import ru.terrakok.cicerone.NavigatorHolder
+import ru.terrakok.cicerone.Router
+import ru.terrakok.cicerone.android.support.SupportAppNavigator
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseMvRxActivity() {
+    private val navigatorHolder: NavigatorHolder by inject("AppScope")
+
+    private val router: Router by inject("AppScope")
+
+    private val navigator: Navigator = SupportAppNavigator(this, R.id.container)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         if (savedInstanceState == null) {
-            val locationFrom = LatLng(60.169845, 24.938523)
-            val locationTo = LatLng(42.69751, 23.32415)
-            val cityFrom = "HEL"
-            val cityTo = "SOF"
-            val args = MapArgs(locationFrom, locationTo, cityFrom, cityTo)
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MapFragment().apply {
-                    arguments = Bundle().apply {
-                        putParcelable(MvRx.KEY_ARG, args)
-                    }
-                })
-                .commit()
+            router.newRootScreen(LocationScreen())
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        navigatorHolder.setNavigator(navigator)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        navigatorHolder.removeNavigator()
+    }
+
+    override fun onBackPressed() {
+        val onBackPressedListener = supportFragmentManager.findFragmentById(R.id.container) as? OnBackPressedListener
+        onBackPressedListener?.onBackPressed() ?: super.onBackPressed()
     }
 }
