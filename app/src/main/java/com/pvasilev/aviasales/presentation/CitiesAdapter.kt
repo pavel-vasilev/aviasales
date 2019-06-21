@@ -10,7 +10,7 @@ import com.pvasilev.aviasales.R
 import com.pvasilev.aviasales.data.models.City
 import kotlinx.android.synthetic.main.item_city.view.*
 
-class CitiesAdapter : ListAdapter<City, CitiesAdapter.CityVH>(CitiesAdapter) {
+class CitiesAdapter(private val onCitySelectedListener: (City) -> Unit) : ListAdapter<City, CitiesAdapter.CityVH>(CitiesAdapter) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CityVH {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_city, parent, false)
         return CityVH(itemView)
@@ -20,11 +20,14 @@ class CitiesAdapter : ListAdapter<City, CitiesAdapter.CityVH>(CitiesAdapter) {
         holder.bind(getItem(position))
     }
 
-    class CityVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class CityVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(city: City) {
             itemView.tv_city.text = city.latinCity
             itemView.tv_fullname.text = city.latinFullName
             itemView.tv_code.text = city.countryCode
+            itemView.setOnClickListener {
+                onCitySelectedListener(getItem(adapterPosition))
+            }
         }
     }
 
