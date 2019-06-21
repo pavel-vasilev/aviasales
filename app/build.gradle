@@ -45,6 +45,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation "com.google.maps.android:android-maps-utils:0.5"
+    implementation 'ru.terrakok.cicerone:cicerone:5.0.0'
     implementation 'com.airbnb.android:mvrx:1.0.2'
     implementation 'com.squareup.retrofit2:retrofit:2.6.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.6.0'

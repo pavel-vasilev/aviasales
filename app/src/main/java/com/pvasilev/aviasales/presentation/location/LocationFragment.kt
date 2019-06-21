@@ -23,6 +23,9 @@ class LocationFragment : BaseMvRxFragment() {
         tv_to.setOnClickListener {
             viewModel.onLocationToClicked()
         }
+        btn_search.setOnClickListener {
+            viewModel.onSearchClicked()
+        }
     }
 
     override fun invalidate() = withState(viewModel) { state ->
