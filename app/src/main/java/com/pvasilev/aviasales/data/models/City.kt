@@ -5,5 +5,6 @@ data class City(
     val latinCity: String,
     val latinCountry: String,
     val latinFullName: String,
+    val countryCode: String,
     val location: Location
 )
