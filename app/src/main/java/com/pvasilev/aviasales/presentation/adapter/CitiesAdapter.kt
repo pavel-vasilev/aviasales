@@ -1,4 +1,4 @@
-package com.pvasilev.aviasales.presentation
+package com.pvasilev.aviasales.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +10,9 @@ import com.pvasilev.aviasales.R
 import com.pvasilev.aviasales.data.models.City
 import kotlinx.android.synthetic.main.item_city.view.*
 
-class CitiesAdapter(private val onCitySelectedListener: (City) -> Unit) : ListAdapter<City, CitiesAdapter.CityVH>(CitiesAdapter) {
+class CitiesAdapter(private val onCitySelectedListener: (City) -> Unit) : ListAdapter<City, CitiesAdapter.CityVH>(
+    CitiesAdapter
+) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CityVH {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_city, parent, false)
         return CityVH(itemView)

@@ -55,7 +55,7 @@ class LocationFragment : BaseMvRxFragment(), OnBackPressedListener {
             tv_from.text = state.cityFrom ?: resources.getString(R.string.choose_departure)
             tv_to.text = state.cityTo ?: resources.getString(R.string.choose_destination)
         }
-        btn_search.isEnabled = state.locationFrom != null && state.locationTo != null
+        btn_search.isEnabled = state.isSearchEnabled
     }
 
     override fun onBackPressed(): Boolean {

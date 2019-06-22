@@ -8,4 +8,7 @@ data class LocationState(
     val locationTo: LatLng? = null,
     val cityFrom: String? = null,
     val cityTo: String? = null
-) : MvRxState
+) : MvRxState {
+    val isSearchEnabled: Boolean
+        get() = cityFrom != null && cityTo != null && cityFrom != cityTo
+}

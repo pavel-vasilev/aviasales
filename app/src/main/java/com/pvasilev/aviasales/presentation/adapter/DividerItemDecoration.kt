@@ -1,4 +1,4 @@
-package com.pvasilev.aviasales.presentation
+package com.pvasilev.aviasales.presentation.adapter
 
 import android.graphics.Canvas
 import android.graphics.Color

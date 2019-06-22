@@ -1,6 +1,6 @@
 package com.pvasilev.aviasales.di
 
-import com.pvasilev.aviasales.data.repository.AutocompleteService
+import com.pvasilev.aviasales.data.repository.datasource.AutocompleteService
 import retrofit2.Retrofit
 import javax.inject.Inject
 import javax.inject.Provider

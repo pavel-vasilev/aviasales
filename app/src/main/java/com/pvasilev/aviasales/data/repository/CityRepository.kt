@@ -1,6 +1,7 @@
 package com.pvasilev.aviasales.data.repository
 
 import com.pvasilev.aviasales.data.models.City
+import com.pvasilev.aviasales.data.repository.datasource.AutocompleteService
 import io.reactivex.Single
 import javax.inject.Inject
 

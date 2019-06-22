@@ -1,4 +1,4 @@
-package com.pvasilev.aviasales.data.repository
+package com.pvasilev.aviasales.data.repository.datasource
 
 import com.pvasilev.aviasales.data.models.City
 import com.serjltt.moshi.adapters.Wrapped

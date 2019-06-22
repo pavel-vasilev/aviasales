@@ -1,12 +1,11 @@
-package com.pvasilev.aviasales
+package com.pvasilev.aviasales.presentation
 
 import android.os.Bundle
 import android.os.Looper
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.airbnb.mvrx.BaseMvRxActivity
-import com.pvasilev.aviasales.presentation.OnBackPressedListener
-import com.pvasilev.aviasales.presentation.inject
+import com.pvasilev.aviasales.R
 import com.pvasilev.aviasales.presentation.location.LocationFragment
 import com.pvasilev.aviasales.presentation.location.LocationScreen
 import com.pvasilev.aviasales.presentation.map.MapFragment

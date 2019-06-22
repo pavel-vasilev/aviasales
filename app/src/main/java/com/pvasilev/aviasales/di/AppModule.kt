@@ -1,6 +1,6 @@
 package com.pvasilev.aviasales.di
 
-import com.pvasilev.aviasales.data.repository.AutocompleteService
+import com.pvasilev.aviasales.data.repository.datasource.AutocompleteService
 import com.pvasilev.aviasales.presentation.location.LocationViewModel
 import com.pvasilev.aviasales.presentation.location.LocationViewModel_AssistedFactory
 import com.pvasilev.aviasales.presentation.map.MapViewModel
