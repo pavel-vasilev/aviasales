@@ -42,7 +42,7 @@ class MapFragment : BaseMapMvRxFragment(), OnBackPressedListener {
                     addPolyline(getPolyline(state.pointsOnPath))
                     addMarker(getCityMarker(state.cityFrom, state.locationFrom))
                     addMarker(getCityMarker(state.cityTo, state.locationTo))
-                    moveCamera(CameraUpdateFactory.newLatLng(state.locationFrom))
+                    moveCamera(CameraUpdateFactory.newLatLng(state.planeLocation))
                     marker = addMarker(getPlaneMarker(state.planeLocation, state.planeRotation))
                 }
             }

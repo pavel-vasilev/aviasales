@@ -4,6 +4,7 @@ import com.airbnb.mvrx.FragmentViewModelContext
 import com.airbnb.mvrx.MvRxViewModelFactory
 import com.airbnb.mvrx.ViewModelContext
 import com.pvasilev.aviasales.domain.GetPlanePositionUseCase
+import com.pvasilev.aviasales.domain.GetPlaneRotationUseCase
 import com.pvasilev.aviasales.domain.GetPointsOnPathUseCase
 import com.pvasilev.aviasales.presentation.base.BaseMvRxViewModel
 import com.pvasilev.aviasales.presentation.base.ViewModelFactory
@@ -15,6 +16,7 @@ class MapViewModel @AssistedInject constructor(
     @Assisted initialState: MapState,
     private val router: Router,
     getPlanePosition: GetPlanePositionUseCase,
+    getPlaneRotation: GetPlaneRotationUseCase,
     getPointsOnPath: GetPointsOnPathUseCase
 ) : BaseMvRxViewModel<MapState>(initialState) {
 
@@ -27,6 +29,13 @@ class MapViewModel @AssistedInject constructor(
             .subscribe {
                 setState {
                     copy(planeLocation = it)
+                }
+            }
+            .disposeOnClear()
+        getPlaneRotation(GetPlanePositionUseCase.Params(initialState.locationFrom, initialState.locationTo))
+            .subscribe {
+                setState {
+                    copy(planeRotation = it)
                 }
             }
             .disposeOnClear()
