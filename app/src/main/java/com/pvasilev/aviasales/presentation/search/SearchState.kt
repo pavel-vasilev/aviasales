@@ -5,4 +5,7 @@ import com.airbnb.mvrx.MvRxState
 import com.airbnb.mvrx.Uninitialized
 import com.pvasilev.aviasales.data.models.City
 
-data class SearchState(val cities: Async<List<City>> = Uninitialized) : MvRxState
+data class SearchState(
+    val cities: List<City> = emptyList(),
+    val request: Async<List<City>> = Uninitialized
+) : MvRxState

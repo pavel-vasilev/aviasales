@@ -24,9 +24,10 @@ class SearchViewModel @AssistedInject constructor(
 
     init {
         term.debounce(300, TimeUnit.MILLISECONDS)
-            .flatMapSingle { getCities(GetCitiesUseCase.Params(it)) }
-            .execute {
-                copy(cities = it)
+            .subscribe {
+                getCities(GetCitiesUseCase.Params(it)).execute {
+                    copy(cities = it() ?: cities, request = it)
+                }
             }
             .disposeOnClear()
     }

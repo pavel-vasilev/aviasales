@@ -4,22 +4,32 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.airbnb.mvrx.BaseMvRxFragment
-import com.airbnb.mvrx.Success
-import com.airbnb.mvrx.fragmentViewModel
-import com.airbnb.mvrx.withState
+import com.airbnb.mvrx.*
 import com.pvasilev.aviasales.R
-import com.pvasilev.aviasales.presentation.*
+import com.pvasilev.aviasales.presentation.OnBackPressedListener
 import com.pvasilev.aviasales.presentation.adapter.CitiesAdapter
 import com.pvasilev.aviasales.presentation.adapter.DividerItemDecoration
+import com.pvasilev.aviasales.presentation.inject
+import com.pvasilev.aviasales.presentation.setOnActionCollapseListener
+import com.pvasilev.aviasales.presentation.setOnQueryTextChangeListener
 import kotlinx.android.synthetic.main.fragment_search.*
 
 class SearchFragment : BaseMvRxFragment(), OnBackPressedListener {
     val viewModelFactory: SearchViewModel.Factory by inject("SearchScope")
 
     private val searchViewModel: SearchViewModel by fragmentViewModel()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        searchViewModel.selectSubscribe(SearchState::request, UniqueOnly("request")) {
+            if (it is Fail) {
+                Toast.makeText(requireContext(), R.string.error_network, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.fragment_search, container, false)
@@ -45,10 +55,7 @@ class SearchFragment : BaseMvRxFragment(), OnBackPressedListener {
     }
 
     override fun invalidate() = withState(searchViewModel) { state ->
-        val cities = state.cities
-        if (cities is Success) {
-            (recyclerView.adapter as CitiesAdapter).submitList(cities())
-        }
+        (recyclerView.adapter as CitiesAdapter).submitList(state.cities)
     }
 
     override fun onBackPressed(): Boolean {
