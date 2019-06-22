@@ -3,8 +3,7 @@ package com.pvasilev.aviasales.presentation.map
 import com.airbnb.mvrx.FragmentViewModelContext
 import com.airbnb.mvrx.MvRxViewModelFactory
 import com.airbnb.mvrx.ViewModelContext
-import com.pvasilev.aviasales.domain.GetPlanePositionUseCase
-import com.pvasilev.aviasales.domain.GetPlaneRotationUseCase
+import com.pvasilev.aviasales.domain.GetPlaneOnMapUseCase
 import com.pvasilev.aviasales.domain.GetPointsOnPathUseCase
 import com.pvasilev.aviasales.presentation.base.BaseMvRxViewModel
 import com.pvasilev.aviasales.presentation.base.ViewModelFactory
@@ -15,8 +14,7 @@ import ru.terrakok.cicerone.Router
 class MapViewModel @AssistedInject constructor(
     @Assisted initialState: MapState,
     private val router: Router,
-    getPlanePosition: GetPlanePositionUseCase,
-    getPlaneRotation: GetPlaneRotationUseCase,
+    getPlaneOnMap: GetPlaneOnMapUseCase,
     getPointsOnPath: GetPointsOnPathUseCase
 ) : BaseMvRxViewModel<MapState>(initialState) {
 
@@ -25,17 +23,10 @@ class MapViewModel @AssistedInject constructor(
         setState {
             copy(pointsOnPath = pointsOnPath)
         }
-        getPlanePosition(GetPlanePositionUseCase.Params(initialState.locationFrom, initialState.locationTo))
-            .subscribe {
+        getPlaneOnMap(GetPlaneOnMapUseCase.Params(initialState.locationFrom, initialState.locationTo))
+            .subscribe { (location, rotation) ->
                 setState {
-                    copy(planeLocation = it)
-                }
-            }
-            .disposeOnClear()
-        getPlaneRotation(GetPlanePositionUseCase.Params(initialState.locationFrom, initialState.locationTo))
-            .subscribe {
-                setState {
-                    copy(planeRotation = it)
+                    copy(planeLocation = location, planeRotation = rotation)
                 }
             }
             .disposeOnClear()
